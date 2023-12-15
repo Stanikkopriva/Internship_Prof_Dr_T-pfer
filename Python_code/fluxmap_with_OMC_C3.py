@@ -27,7 +27,7 @@ import numpy as np
 
 
 #Import flux data set and replace index with unamed column (reaction id)
-fluxdata_df = pd.read_csv("C:/Users/stani/OneDrive/Dokumente/Uni stuff/Etagen praktikum/Python/Csv/C3_Flux_Solution.csv")
+fluxdata_df = pd.read_csv("./Csv_files/C3_Flux_Solution.csv")
 fluxdata_df.set_index("Unnamed: 0",inplace=True)
 print(fluxdata_df)
 
@@ -146,41 +146,6 @@ direction = [eval_sign(i) for i in path_fluxes]
 
 print(path_fluxes)
 
-#increasing values of list, perfrming a min max normalisation
-"""
-# Example list
-values = path_fluxes
-
-# Convert the list to a 2D NumPy array
-array_values = [[val] for val in values]
-#print(array_values)
-# Create a MinMaxScaler
-scaler = MinMaxScaler()
-
-# Fit and transform the values
-scaled_values = scaler.fit_transform(array_values)
-print(scaled_values)
-# Flatten the scaled values back to a list
-scaled_values_list = [val[0] for val in scaled_values]
-
-# Specify the factor by which you want to increase the values
-increase_factor = 10000
-
-# Scale the values by the increase factor
-scaled_values_list = [val * increase_factor for val in scaled_values_list]
-
-# Denormalize the scaled values back to the original range
-increased_values = scaler.inverse_transform([[val] for val in scaled_values_list])
-
-# Flatten the increased values back to a list
-fluxdata_increased_path_fluxes = [val[0] for val in increased_values]
-
-print("Original Values:")
-print(values)
-print("\nValues with Increased Values while Maintaining Ratio:")
-print(fluxdata_increased_path_fluxes)
-
-"""
 #convert list into series
 path_fluxes_series = abs(pd.Series(list(path_fluxes)))
 #print(path_fluxes_series[48])
@@ -232,7 +197,7 @@ norm_path_fluxes_minmax = (path_fluxes_series_increased-path_fluxes_series_incre
 
 flux_df = fluxdata_match_df.assign(flux = path_fluxes_series_increased, direction = direction, norm_fluxes = norm_path_fluxes_minmax)
 print(flux_df)
-flux_df.to_excel(r'C:/Users/stani/OneDrive/Dokumente/Uni stuff/Etagen praktikum/Python/Flux_path_excel/flux_path_increased_C3.xlsx', index=False)
+flux_df.to_excel(r'./Excel_files/Flux_C3.xlsx', index=False)
 #with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
     #print(flux_df)
  
@@ -266,7 +231,7 @@ data_min = lowest_value_column
 
 from omccolors import omccolors
 
-cmap = "viridis"
+cmap = "rainbow"
 
 (colormap, min_exp, max_exp) = omccolors.generate_omc(data_min, data_max, cmap)
 
@@ -288,7 +253,7 @@ def b_g(cmap=colormap, low=0, high=0, dataframe = flux_df):
                                 norm=norm,
                                 orientation='vertical')
     cb1.set_label('Flux Values')
-    fig.savefig("C:/Users/stani/OneDrive/Dokumente/Uni stuff/Etagen praktikum/Python/Colorbar/OMC_Colorbar_C3.svg", format='svg', bbox_inches = 'tight')
+    fig.savefig("./SVG_files/OMC_Colorbar_C3.svg", format='svg', bbox_inches = 'tight')
 
     grad = [color for color in c]
     return grad
@@ -313,7 +278,7 @@ flux_df = flux_df.assign(SQ_flux_values = norm_path_fluxes)
     
     
 #Parse the skeleton model SVG file
-def parser(filename = "C:/Users/stani/OneDrive/Dokumente/Uni stuff/Etagen praktikum/Python/SVG_images/Skeleton_model_OMC.svg", path = "path33", fill = "#ff0000", width = 1, direction = 1):
+def parser(filename = "./SVG_files/Skeleton_model_finished_template.svg", path = "path33", fill = "#ff0000", width = 1, direction = 1):
     tree = etree.parse(open(filename, 'r'))
     if direction == 1:
         for element in tree.iter():

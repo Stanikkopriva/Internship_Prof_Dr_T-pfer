@@ -27,7 +27,7 @@ import numpy as np
 
 
 #Import flux data set and replace index with unamed column (reaction id)
-fluxdata_df = pd.read_csv("C:/Users/stani/OneDrive/Dokumente/Uni stuff/Etagen praktikum/Python/Csv/C3_C4_Flux_Solution.csv")
+fluxdata_df = pd.read_csv("./Csv_files/C3_C4_Flux_Solution.csv")
 fluxdata_df.set_index("Unnamed: 0",inplace=True)
 print(fluxdata_df)
 
@@ -199,7 +199,7 @@ norm_path_fluxes_minmax = (path_fluxes_series_increased-path_fluxes_series_incre
 
 flux_df = fluxdata_match_df.assign(flux = path_fluxes_series_increased, direction = direction, norm_fluxes = norm_path_fluxes_minmax)
 #print(flux_df)
-flux_df.to_excel(r'C:/Users/stani/OneDrive/Dokumente/Uni stuff/Etagen praktikum/Python/Flux_path_excel/flux_path_increased_C3_C4.xlsx', index=False)
+flux_df.to_excel(r'./Excel_files/Flux_C3_C4.xlsx', index=False)
 #with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
     #print(flux_df)
  
@@ -255,7 +255,7 @@ def b_g(cmap=colormap, low=0, high=0, dataframe = flux_df):
                                 norm=norm,
                                 orientation='vertical')
     cb1.set_label('Flux Values')
-    fig.savefig("C:/Users/stani/OneDrive/Dokumente/Uni stuff/Etagen praktikum/Python/Colorbar/OMC_Colorbar_C3_C4.svg", format='svg', bbox_inches = 'tight')
+    fig.savefig("./SVG_files/OMC_Colorbar_C3_C4.svg", format='svg', bbox_inches = 'tight')
 
     grad = [color for color in c]
     return grad
@@ -280,7 +280,7 @@ flux_df = flux_df.assign(SQ_flux_values = norm_path_fluxes)
     
     
 #Parse the skeleton model SVG file
-def parser(filename = "C:/Users/stani/OneDrive/Dokumente/Uni stuff/Etagen praktikum/Python/SVG_images/Skeleton_model_OMC.svg", path = "path33", fill = "#ff0000", width = 1, direction = 1):
+def parser(filename = "./SVG_files/Skeleton_model_finished_template.svg", path = "path33", fill = "#ff0000", width = 1, direction = 1):
     tree = etree.parse(open(filename, 'r'))
     if direction == 1:
         for element in tree.iter():
